@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OmniauthTest</title>
+    <title>OmniAuth Test</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,21 +9,27 @@
   </head>
 
   <body>
+        <%= yield %>
 	  <div id="user-widget">
 	  	<% if current_user %>
-	  		Welcome <strong><%= current_user.name %></strong>!<br />
-	  		<% if current_user.provider == "facebook" %>
-      	  <%= image_tag current_user.normalimage %><br />
-  		  <% else %>
-    	    <%= image_tag current_user.image %><br />
-    		<% end %> 
-    		<%= link_to "Sign out", signout_path, id: "sign_out" %>
+        <div class="logged-in">
+  	  		<h2>Welcome <strong><%= current_user.name %></strong>!</h2>
+          <br />
+	   		  <% if current_user.provider == "facebook" %>
+         	  <%= image_tag current_user.normalimage %><br />
+  		    <% else %>
+    	     <%= image_tag current_user.image %><br />
+    		  <% end %> 
+    		  <%= button_to "Sign out", signout_path, method: :delete, id: "sign_out" %>
+        </div>
   		<% else %>
-    		<%= link_to "Sign in with Github", "/auth/github" %><br />
-    		<%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
+        <div class="buttons">
+    		  <%= button_to "Sign in with Github", "/auth/github" %>
+    		  <%= button_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
+        </div>
   		<% end %>
 	  </div>
 
-    <%= yield %>
+
   </body>
 </html>
